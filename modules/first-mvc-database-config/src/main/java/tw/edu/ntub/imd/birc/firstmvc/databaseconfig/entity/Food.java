@@ -17,9 +17,7 @@ public class Food {
      *
      * @Since 1.0.1
      */
-    // PK
     @Id
-    // 對應欄位資料
     @Column(name = "name", length = 45, nullable = false)
     public String name;
 
@@ -76,6 +74,6 @@ public class Food {
      *
      * @Since 1.0.1
      */
-    @Column(name = "label", length = 45, nullable = false)
+    @Column(name = "label", length = 45)
     public String label;
 }

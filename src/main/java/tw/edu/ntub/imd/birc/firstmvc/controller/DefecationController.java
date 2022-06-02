@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tw.edu.ntub.imd.birc.firstmvc.bean.DefecationBean;
 import tw.edu.ntub.imd.birc.firstmvc.bean.FoodBean;
+import tw.edu.ntub.imd.birc.firstmvc.service.DefecationService;
 import tw.edu.ntub.imd.birc.firstmvc.service.FoodService;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.BindingResultUtils;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.ResponseEntityBuilder;
@@ -15,67 +17,62 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/food")
+@RequestMapping(path = "/defecation")
 
-public class FoodController {
-    private final FoodService foodService;
+public class DefecationController {
+    private final DefecationService defecationService;
 
     @GetMapping(path = "")
-    public ResponseEntity<String> searchFood() {
+    public ResponseEntity<String> searchDefecation() {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(foodService.searchAll(),this::addFoodToObjectData)
+                .data(defecationService.searchAll(),this::addDefecationToObjectData)
                 .build();
     }
 
     @PostMapping(path="")
-    public ResponseEntity<String> createFood(@Valid @RequestBody FoodBean foodBean,
+    public ResponseEntity<String> createDefecation(@Valid @RequestBody DefecationBean defecationBean,
                                                 BindingResult bindingResult){
         BindingResultUtils.validate(bindingResult);
-        foodService.save(foodBean);
+        defecationService.save(defecationBean);
         return ResponseEntityBuilder.success()
                 .message("新增成功")
                 .build();
     }
 
     @PatchMapping(path="")
-    public ResponseEntity<String> updateFood(@RequestBody FoodBean foodBean){
-        foodService.update(foodBean.getName(), foodBean);
+    public ResponseEntity<String> updateDefecation(@RequestBody DefecationBean defecationBean){
+        defecationService.update(defecationBean.getId(), defecationBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
                 .build();
     }
 
     @DeleteMapping(path="")
-    public ResponseEntity<String> deleteFood(@RequestParam(name = "name") String name) {
-        foodService.delete(name);
+    public ResponseEntity<String> deleteDefecation(@RequestParam(name = "id") Integer id) {
+        defecationService.delete(id);
         return ResponseEntityBuilder.success()
                 .message("刪除成功")
                 .build();
     }
 
-    @GetMapping(path = "", params = {"name"})
-    public ResponseEntity<String> getFood(@RequestParam(name = "name") String name) {
+    @GetMapping(path = "", params = {"id"})
+    public ResponseEntity<String> getDefecation(@RequestParam(name = "id") Integer id) {
         ObjectData objectData = new ObjectData();
-        Optional<FoodBean> foodBeanOptional = foodService.getById(name);
-        foodBeanOptional.orElseThrow(() -> new RuntimeException("查無此飲食，請確認名字是否正確"));
-        FoodBean foodBean = foodBeanOptional.get();
-        addFoodToObjectData(objectData,foodBean);
+        Optional<DefecationBean> defecationBeanOptional = defecationService.getById(id);
+        defecationBeanOptional.orElseThrow(() -> new RuntimeException("查無此飲食，請確認名字是否正確"));
+        DefecationBean defecationBean = defecationBeanOptional.get();
+        addDefecationToObjectData(objectData,defecationBean);
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
                 .data(objectData)
                 .build();
     }
 
-    private void addFoodToObjectData(ObjectData objectData, FoodBean foodBean) {
-        objectData.add("name", foodBean.getName());
-        objectData.add("type", foodBean.getType());
-        objectData.add("energy", foodBean.getEnergy());
-        objectData.add("fat", foodBean.getFat());
-        objectData.add("saturatedFat", foodBean.getSaturatedFat());
-        objectData.add("carbohydrate", foodBean.getCarbohydrate());
-        objectData.add("protein", foodBean.getProtein());
-        objectData.add("label", foodBean.getLabel());
+    private void addDefecationToObjectData(ObjectData objectData, DefecationBean defecationBean) {
+        objectData.add("id", defecationBean.getId());
+        objectData.add("defecationTime", defecationBean.getDefecationTime());
+        objectData.add("detail", defecationBean.getDetail());
     }
 
 }
