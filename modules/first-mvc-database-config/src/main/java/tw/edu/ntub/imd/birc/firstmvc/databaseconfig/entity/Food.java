@@ -22,12 +22,12 @@ public class Food {
     public String name;
 
     /**
-     * 食物分類
+     * 食物標籤
      *
      * @Since 1.0.1
      */
-    @Column(name = "type", length = 45, nullable = false)
-    public String type;
+    @Column(name = "label", length = 45)
+    public String label;
 
     /**
      * 食物熱量(以大卡為單位)
@@ -70,10 +70,50 @@ public class Food {
     public Double protein;
 
     /**
-     * 食物標籤
+     * 是否為全榖雜糧類(0:否/1:是)
      *
      * @Since 1.0.1
      */
-    @Column(name = "label", length = 45)
-    public String label;
+    @Column(name = "grains", length = 1, nullable = false)
+    public String grains;
+
+    /**
+     * 是否為蔬菜類(0:否/1:是)
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "vegetables", length = 1, nullable = false)
+    public String vegetables;
+
+    /**
+     * 是否為蛋豆魚肉類(0:否/1:是)
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "meats_protein", length = 1, nullable = false)
+    public String meatsAndProtein;
+
+    /**
+     * 是否為乳品類(0:否/1:是)
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "milk_dairy", length = 1, nullable = false)
+    public String milkAndDairy;
+
+    /**
+     * 是否為水果類(0:否/1:是)
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "fruits", length = 1, nullable = false)
+    public String fruits;
+
+    /**
+     * 是否為油脂與堅果種子類(0:否/1:是)
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "fats", length = 1, nullable = false)
+    public String fats;
 }

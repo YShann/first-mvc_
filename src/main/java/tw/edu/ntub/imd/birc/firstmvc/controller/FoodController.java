@@ -69,13 +69,19 @@ public class FoodController {
 
     private void addFoodToObjectData(ObjectData objectData, FoodBean foodBean) {
         objectData.add("name", foodBean.getName());
-        objectData.add("type", foodBean.getType());
+        objectData.add("label", foodBean.getLabel());
         objectData.add("energy", foodBean.getEnergy());
         objectData.add("fat", foodBean.getFat());
         objectData.add("saturatedFat", foodBean.getSaturatedFat());
         objectData.add("carbohydrate", foodBean.getCarbohydrate());
         objectData.add("protein", foodBean.getProtein());
         objectData.add("label", foodBean.getLabel());
+        objectData.add("grains", foodBean.getGrains());
+        objectData.add("vegetables", foodBean.getVegetables());
+        objectData.add("meatsAndProtein", foodBean.getMeatsAndProtein());
+        objectData.add("milkAndDairy", foodBean.getMilkAndDairy());
+        objectData.add("fruits", foodBean.getFruits());
+        objectData.add("fats", foodBean.getFats());
     }
 
 }
