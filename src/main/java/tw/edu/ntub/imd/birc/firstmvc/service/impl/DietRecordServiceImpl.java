@@ -12,6 +12,8 @@ import tw.edu.ntub.imd.birc.firstmvc.dto.file.uploader.UploadResult;
 import tw.edu.ntub.imd.birc.firstmvc.service.DietRecordService;
 import tw.edu.ntub.imd.birc.firstmvc.service.transformer.DietRecordTransformer;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,5 +50,10 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
         return Sort.by(
                 Sort.Order.desc(DietRecord_.MEAL_TIME)
         );
+    }
+
+    @Override
+    public List<DietRecordBean> searchByMealTime(LocalDateTime startDate, LocalDateTime endDate) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealTime(startDate,endDate), transformer::transferToBean);
     }
 }

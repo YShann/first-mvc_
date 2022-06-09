@@ -23,6 +23,6 @@ public class DietRecordBean {
     public String milkAndDairy;
     public String fruits;
     public String fats;
-    private String url;
+    private String imageUrl;
     private MultipartFile imageFile;
 }
