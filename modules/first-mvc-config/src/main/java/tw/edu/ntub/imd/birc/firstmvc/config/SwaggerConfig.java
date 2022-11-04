@@ -29,31 +29,31 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Configuration
-@OpenAPIDefinition(
-        info = @Info(
-                version = "0.0.1",
-                title = "新北工業會 - API",
-                description = "此為所有系統API功能列表，如有疑問，請洽負責人員\n" +
-                        "\n" +
-                        "  以下為標準回傳格式，data請替換成API的RequestBody\n" +
-                        "  ```json=\n" +
-                        "  {\n" +
-                        "      \"result\": boolean,\n" +
-                        "      \"errorCode\": string,\n" +
-                        "      \"message\": string,\n" +
-                        "      \"data\": (參考RequestBody)\n" +
-                        "  }\n" +
-                        "  ```",
-                contact = @Contact(
-                        name = "李恩瑋",
-                        email = "10646007@ntub.edu.tw"
-                )
-        ),
-        servers = {
-                @Server(url = "http://140.131.115.156:8080", description = "測試機"),
-                @Server(url = "http://140.131.115.157:8080", description = "正式機")
-        }
-)
+//@OpenAPIDefinition(
+//        info = @Info(
+//                version = "0.0.1",
+//                title = "新北工業會 - API",
+//                description = "此為所有系統API功能列表，如有疑問，請洽負責人員\n" +
+//                        "\n" +
+//                        "  以下為標準回傳格式，data請替換成API的RequestBody\n" +
+//                        "  ```json=\n" +
+//                        "  {\n" +
+//                        "      \"result\": boolean,\n" +
+//                        "      \"errorCode\": string,\n" +
+//                        "      \"message\": string,\n" +
+//                        "      \"data\": (參考RequestBody)\n" +
+//                        "  }\n" +
+//                        "  ```",
+//                contact = @Contact(
+//                        name = "李恩瑋",
+//                        email = "10646007@ntub.edu.tw"
+//                )
+//        ),
+//        servers = {
+//                @Server(url = "http://140.131.115.156:8080", description = "測試機"),
+//                @Server(url = "http://140.131.115.157:8080", description = "正式機")
+//        }
+//)
 public class SwaggerConfig {
     @Bean
     public GroupedOpenApi userApi(@Qualifier("userApiCustomiser") OpenApiCustomiser openApiCustomiser) {

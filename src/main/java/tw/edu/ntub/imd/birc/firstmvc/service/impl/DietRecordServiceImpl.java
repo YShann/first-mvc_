@@ -2,6 +2,7 @@ package tw.edu.ntub.imd.birc.firstmvc.service.impl;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tw.edu.ntub.birc.common.util.CollectionUtils;
 import tw.edu.ntub.imd.birc.firstmvc.bean.DietRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.dao.DietRecordDAO;
@@ -22,7 +23,7 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
     private final DietRecordTransformer transformer;
     private final MultipartFileUploader uploader;
 
-    public DietRecordServiceImpl(DietRecordDAO dietRecordDAO, DietRecordTransformer transformer,MultipartFileUploader uploader) {
+    public DietRecordServiceImpl(DietRecordDAO dietRecordDAO, DietRecordTransformer transformer, MultipartFileUploader uploader) {
         super(dietRecordDAO, transformer);
         this.dietRecordDAO = dietRecordDAO;
         this.transformer = transformer;
@@ -30,11 +31,11 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
     }
 
     @Override
-    public DietRecordBean save(DietRecordBean dietRecordBean) {
+    public DietRecordBean save(DietRecordBean dietRecordBean, MultipartFile imageFile) {
         DietRecord dietRecord = transformer.transferToEntity(dietRecordBean);
         DietRecord saveResult = dietRecordDAO.saveAndFlush(dietRecord);
-        if (dietRecordBean.getImageFile() != null) {
-            UploadResult uploadResult = uploader.upload(dietRecordBean.getImageFile(), "imageFile");
+        if (imageFile != null) {
+            UploadResult uploadResult = uploader.upload(imageFile, "imageFile");
             saveResult.setImageUrl(uploadResult.getUrl());
             dietRecordDAO.save(saveResult);
         }
@@ -53,7 +54,17 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
     }
 
     @Override
-    public List<DietRecordBean> searchByMealTime(LocalDateTime startDate, LocalDateTime endDate) {
-        return CollectionUtils.map(dietRecordDAO.searchByMealTime(startDate,endDate), transformer::transferToBean);
+    public List<DietRecordBean> searchByMealTimeRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealTimeRange(startDate, endDate), transformer::transferToBean);
+    }
+
+    @Override
+    public List<DietRecordBean> searchByMealTime(LocalDateTime mealTime) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealTime(mealTime, getSort()), transformer::transferToBean);
+    }
+
+    @Override
+    public DietRecordBean save(DietRecordBean dietRecordBean) {
+        return null;
     }
 }

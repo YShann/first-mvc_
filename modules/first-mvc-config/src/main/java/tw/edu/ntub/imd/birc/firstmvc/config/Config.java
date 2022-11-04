@@ -77,7 +77,8 @@ public class Config implements WebMvcConfigurer {
                         "http://140.131.115.147:3000",
                         "http://140.131.115.162:3000",
                         "http://140.131.115.163:3000",
-                        "http://192.168.161.234:8080"
+                        "http://192.168.161.234:8080",
+                        "http://192.168.30.234:8080"
                 )
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")

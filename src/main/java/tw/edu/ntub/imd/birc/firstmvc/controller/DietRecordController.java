@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tw.edu.ntub.imd.birc.firstmvc.bean.DietRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.bean.FoodBean;
 import tw.edu.ntub.imd.birc.firstmvc.service.DietRecordService;
@@ -34,10 +35,10 @@ public class DietRecordController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<String> createDietRecord(@Valid DietRecordBean dietRecordBean,
+    public ResponseEntity<String> createDietRecord(@Valid DietRecordBean dietRecordBean, MultipartFile imageFile,
                                                    BindingResult bindingResult) {
         BindingResultUtils.validate(bindingResult);
-        dietRecordService.save(dietRecordBean);
+        dietRecordService.save(dietRecordBean,imageFile);
         return ResponseEntityBuilder.success()
                 .message("新增成功")
                 .build();
@@ -73,12 +74,21 @@ public class DietRecordController {
     }
 
     @GetMapping(path = "", params = {"startDate", "endDate"})
-    public ResponseEntity<String> getDietRecord(
+    public ResponseEntity<String> getDietRecordRange(
             @RequestParam(name = "startDate") LocalDateTime startDate,
             @RequestParam(name = "endDate") LocalDateTime endDate) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(dietRecordService.searchByMealTime(startDate,endDate), this::addDietRecordToObjectData)
+                .data(dietRecordService.searchByMealTimeRange(startDate,endDate), this::addDietRecordToObjectData)
+                .build();
+    }
+
+    @GetMapping(path = "", params = {"mealTime"})
+    public ResponseEntity<String> getDietRecord(
+            @RequestParam(name = "mealTime") LocalDateTime mealTime) {
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(dietRecordService.searchByMealTime(mealTime), this::addDietRecordToObjectData)
                 .build();
     }
 
