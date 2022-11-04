@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class DietRecordBean {
     public Integer id;
     public String foodName;
-    public String portionSize;
+    public Integer portionSize;
     public LocalDateTime mealTime;
     public String note;
     public Integer energy;

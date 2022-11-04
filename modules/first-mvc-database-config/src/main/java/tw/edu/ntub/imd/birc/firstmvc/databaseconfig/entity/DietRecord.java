@@ -31,12 +31,12 @@ public class DietRecord {
     public String foodName;
 
     /**
-     * 份量(0:少量/1:適中/2:飽食/3:過量)
+     *
      *
      * @Since 1.0.1
      */
-    @Column(name = "portion_size", length = 3, nullable = false)
-    public String portionSize;
+    @Column(name = "portion_size", nullable = false)
+    public Integer portionSize;
 
     /**
      * 進食時間
