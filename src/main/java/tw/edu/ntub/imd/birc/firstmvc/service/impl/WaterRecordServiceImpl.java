@@ -3,10 +3,13 @@ package tw.edu.ntub.imd.birc.firstmvc.service.impl;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tw.edu.ntub.birc.common.util.CollectionUtils;
+import tw.edu.ntub.imd.birc.firstmvc.bean.DietRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.bean.WaterRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.dao.WaterRecordDAO;
+import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.DietRecord;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.WaterRecord;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.WaterRecord_;
+import tw.edu.ntub.imd.birc.firstmvc.dto.file.uploader.UploadResult;
 import tw.edu.ntub.imd.birc.firstmvc.service.WaterRecordService;
 import tw.edu.ntub.imd.birc.firstmvc.service.transformer.WaterRecordTransformer;
 
@@ -32,9 +35,14 @@ public class WaterRecordServiceImpl extends BaseServiceImpl<WaterRecordBean, Wat
     }
 
     @Override
-    public List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate) {
-        return CollectionUtils.map(waterRecordDAO.searchByWaterTimeRange(startDate, endDate), transformer::transferToBean);
+    public List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate,String account) {
+        return CollectionUtils.map(waterRecordDAO.searchByWaterTimeRange(startDate, endDate, account), transformer::transferToBean);
 
+    }
+
+    @Override
+    public List<WaterRecordBean> searchByWaterTime(LocalDate waterTime,String account) {
+        return CollectionUtils.map(waterRecordDAO.searchByWaterTime(waterTime, account), transformer::transferToBean);
     }
 
     @Override
@@ -48,8 +56,4 @@ public class WaterRecordServiceImpl extends BaseServiceImpl<WaterRecordBean, Wat
         );
     }
 
-//    @Override
-//    public DietRecordBean save(WaterRecordBean waterRecordBean) {
-//        return null;
-//    }
 }

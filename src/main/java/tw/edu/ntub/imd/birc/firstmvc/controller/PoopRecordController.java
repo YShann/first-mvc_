@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tw.edu.ntub.imd.birc.firstmvc.bean.PoopRecordBean;
-import tw.edu.ntub.imd.birc.firstmvc.bean.WaterRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.service.PoopRecordService;
-import tw.edu.ntub.imd.birc.firstmvc.service.WaterRecordService;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.BindingResultUtils;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.ResponseEntityBuilder;
 import tw.edu.ntub.imd.birc.firstmvc.util.json.object.ObjectData;
@@ -32,17 +30,17 @@ public class PoopRecordController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<String> createPoopRecord(@Valid PoopRecordBean waterRecordBean,
+    public ResponseEntity<String> createPoopRecord(@Valid @RequestBody PoopRecordBean poopRecordBean,
                                                    BindingResult bindingResult) {
         BindingResultUtils.validate(bindingResult);
-        poopRecordService.save(waterRecordBean);
+        poopRecordService.save(poopRecordBean);
         return ResponseEntityBuilder.success()
                 .message("新增成功")
                 .build();
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<String> updatePoopRecord(PoopRecordBean poopRecordBean) {
+    public ResponseEntity<String> updatePoopRecord(@RequestBody PoopRecordBean poopRecordBean) {
         poopRecordService.update(poopRecordBean.getId(), poopRecordBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
@@ -70,29 +68,33 @@ public class PoopRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate","account"})
     public ResponseEntity<String> getPoopRecordRange(
             @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate) {
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(poopRecordService.searchByPoopTimeRange(startDate,endDate), this::addPoopRecordToObjectData)
+                .data(poopRecordService.searchByPoopTimeRange(startDate,endDate,account), this::addPoopRecordToObjectData)
                 .build();
     }
 
-//    @GetMapping(path = "", params = {"mealTime"})
-//    public ResponseEntity<String> getWaterRecord(
-//            @RequestParam(name = "mealTime") LocalDate mealTime) {
-//        return ResponseEntityBuilder.success()
-//                .message("查詢成功")
-//                .data(waterRecordService.searchByWaterTimeRange(mealTime), this::addWaterRecordToObjectData)
-//                .build();
-//    }
+    @GetMapping(path = "/poopTime", params = {"poopTime","account"})
+    public ResponseEntity<String> getPoopRecord(
+            @RequestParam(name = "poopTime") LocalDate poopTime,
+            @RequestParam(name = "account") String account) {
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(poopRecordService.searchByPoopTime(poopTime,account), this::addPoopRecordToObjectData)
+                .build();
+    }
 
     private void addPoopRecordToObjectData(ObjectData objectData, PoopRecordBean poopRecordBean) {
         objectData.add("id", poopRecordBean.getId());
         objectData.add("poopCount", poopRecordBean.getPoopCount());
         objectData.add("poopTime", poopRecordBean.getPoopTime());
+        objectData.add("poopStatus", poopRecordBean.getPoopStatus());
+        objectData.add("account", poopRecordBean.getAccount());
     }
 
 }

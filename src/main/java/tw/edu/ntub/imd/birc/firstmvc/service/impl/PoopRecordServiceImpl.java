@@ -38,9 +38,14 @@ public class PoopRecordServiceImpl extends BaseServiceImpl<PoopRecordBean, PoopR
     }
 
     @Override
-    public List<PoopRecordBean> searchByPoopTimeRange(LocalDate startDate, LocalDate endDate) {
-        return CollectionUtils.map(poopRecordDAO.searchByPoopTimeRange(startDate, endDate), transformer::transferToBean);
+    public List<PoopRecordBean> searchByPoopTimeRange(LocalDate startDate, LocalDate endDate,String account) {
+        return CollectionUtils.map(poopRecordDAO.searchByPoopTimeRange(startDate, endDate,account), transformer::transferToBean);
 
+    }
+
+    @Override
+    public List<PoopRecordBean> searchByPoopTime(LocalDate poopTime,String account) {
+        return CollectionUtils.map(poopRecordDAO.searchByPoopTime(poopTime,account), transformer::transferToBean);
     }
 
     @Override
@@ -54,8 +59,5 @@ public class PoopRecordServiceImpl extends BaseServiceImpl<PoopRecordBean, PoopR
         );
     }
 
-//    @Override
-//    public DietRecordBean save(WaterRecordBean waterRecordBean) {
-//        return null;
-//    }
+
 }

@@ -11,4 +11,6 @@ public class WaterRecordBean {
     public Integer id;
     public Integer waterVolume;
     public LocalDate waterTime;
+    public String account;
+
 }

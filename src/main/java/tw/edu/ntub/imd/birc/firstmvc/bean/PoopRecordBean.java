@@ -9,4 +9,6 @@ public class PoopRecordBean {
     public Integer id;
     public Integer poopCount;
     public LocalDate poopTime;
+    public String poopStatus;
+    public String account;
 }

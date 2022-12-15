@@ -3,21 +3,27 @@ package tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity;
 import lombok.Data;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.Config;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "food", schema = Config.DATABASE_NAME)
 public class Food {
     /**
-     * 食物名稱
+     * 食物id
      *
      * @Since 1.0.1
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public Integer id;
+
+    /**
+     * 食物名稱
+     *
+     * @Since 1.0.1
+     */
     @Column(name = "name", length = 45, nullable = false)
     public String name;
 

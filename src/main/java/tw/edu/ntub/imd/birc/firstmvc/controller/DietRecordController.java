@@ -45,7 +45,7 @@ public class DietRecordController {
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<String> updateDietRecord(DietRecordBean dietRecordBean) {
+    public ResponseEntity<String> updateDietRecord(@RequestBody DietRecordBean dietRecordBean) {
         dietRecordService.update(dietRecordBean.getId(), dietRecordBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
@@ -73,22 +73,26 @@ public class DietRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate", "account"})
     public ResponseEntity<String> getDietRecordRange(
-            @RequestParam(name = "startDate") LocalDateTime startDate,
-            @RequestParam(name = "endDate") LocalDateTime endDate) {
+            @RequestParam(name = "startDate") LocalDate startDate,
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account
+            ) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(dietRecordService.searchByMealTimeRange(startDate,endDate), this::addDietRecordToObjectData)
+                .data(dietRecordService.searchByMealDateRange(startDate,endDate,account), this::addDietRecordToObjectData)
                 .build();
     }
 
-    @GetMapping(path = "", params = {"mealTime"})
+    @GetMapping(path = "/mealDate", params = {"mealDate","account"})
     public ResponseEntity<String> getDietRecord(
-            @RequestParam(name = "mealTime") LocalDateTime mealTime) {
+            @RequestParam(name = "mealDate") LocalDate mealDate,
+            @RequestParam(name = "account") String account
+    ) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(dietRecordService.searchByMealTime(mealTime), this::addDietRecordToObjectData)
+                .data(dietRecordService.searchByMealDate(mealDate,account), this::addDietRecordToObjectData)
                 .build();
     }
 
@@ -96,6 +100,7 @@ public class DietRecordController {
         objectData.add("id", dietRecordBean.getId());
         objectData.add("foodName", dietRecordBean.getFoodName());
         objectData.add("portionSize", dietRecordBean.getPortionSize());
+        objectData.add("mealDate", dietRecordBean.getMealDate());
         objectData.add("mealTime", dietRecordBean.getMealTime());
         objectData.add("note", dietRecordBean.getNote());
         objectData.add("energy", dietRecordBean.getEnergy());
@@ -110,6 +115,8 @@ public class DietRecordController {
         objectData.add("fruits", dietRecordBean.getFruits());
         objectData.add("fats", dietRecordBean.getFats());
         objectData.add("imageUrl", dietRecordBean.getImageUrl());
+        objectData.add("foodContent", dietRecordBean.getFoodContent());
+        objectData.add("account", dietRecordBean.getAccount());
     }
 
 }

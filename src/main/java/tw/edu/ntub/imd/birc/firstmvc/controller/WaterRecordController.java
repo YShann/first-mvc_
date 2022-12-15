@@ -30,7 +30,7 @@ public class WaterRecordController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<String> createWaterRecord(@Valid WaterRecordBean waterRecordBean,
+    public ResponseEntity<String> createWaterRecord(@Valid @RequestBody WaterRecordBean waterRecordBean,
                                                    BindingResult bindingResult) {
         BindingResultUtils.validate(bindingResult);
         waterRecordService.save(waterRecordBean);
@@ -40,7 +40,7 @@ public class WaterRecordController {
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<String> updateWaterRecord(WaterRecordBean waterRecordBean) {
+    public ResponseEntity<String> updateWaterRecord(@RequestBody WaterRecordBean waterRecordBean) {
         waterRecordService.update(waterRecordBean.getId(), waterRecordBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
@@ -68,29 +68,32 @@ public class WaterRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate","account"})
     public ResponseEntity<String> getWaterRecordRange(
             @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate) {
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(waterRecordService.searchByWaterTimeRange(startDate,endDate), this::addWaterRecordToObjectData)
+                .data(waterRecordService.searchByWaterTimeRange(startDate,endDate,account), this::addWaterRecordToObjectData)
                 .build();
     }
 
-//    @GetMapping(path = "", params = {"mealTime"})
-//    public ResponseEntity<String> getWaterRecord(
-//            @RequestParam(name = "mealTime") LocalDate mealTime) {
-//        return ResponseEntityBuilder.success()
-//                .message("查詢成功")
-//                .data(waterRecordService.searchByWaterTimeRange(mealTime), this::addWaterRecordToObjectData)
-//                .build();
-//    }
+    @GetMapping(path = "/waterTime", params = {"waterTime","account"})
+    public ResponseEntity<String> getWaterRecord(
+            @RequestParam(name = "waterTime") LocalDate waterTime,
+            @RequestParam(name = "account") String account) {
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(waterRecordService.searchByWaterTime(waterTime,account), this::addWaterRecordToObjectData)
+                .build();
+    }
 
     private void addWaterRecordToObjectData(ObjectData objectData, WaterRecordBean waterRecordBean) {
         objectData.add("id", waterRecordBean.getId());
         objectData.add("waterVolume", waterRecordBean.getWaterVolume());
         objectData.add("waterTime", waterRecordBean.getWaterTime());
+        objectData.add("account", waterRecordBean.getAccount());
     }
 
 }

@@ -10,7 +10,7 @@ import tw.edu.ntub.imd.birc.firstmvc.service.transformer.FoodTransformer;
 import java.util.List;
 
 @Service
-public class FoodServiceImpl extends BaseServiceImpl<FoodBean, Food, String> implements FoodService {
+public class FoodServiceImpl extends BaseServiceImpl<FoodBean, Food, Integer> implements FoodService {
     private final FoodDAO foodDAO;
     private final FoodTransformer transformer;
 
@@ -29,5 +29,10 @@ public class FoodServiceImpl extends BaseServiceImpl<FoodBean, Food, String> imp
     @Override
     public List<FoodBean> searchAll() {
         return CollectionUtils.map(foodDAO.findAll(), transformer::transferToBean);
+    }
+
+    @Override
+    public List<FoodBean> getByName(String name) {
+        return CollectionUtils.map(foodDAO.getByName(name), transformer::transferToBean);
     }
 }

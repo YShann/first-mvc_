@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class FoodBean {
+    public Integer id;
     public String name;
     public String label;
     public Integer energy;

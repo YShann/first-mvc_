@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tw.edu.ntub.imd.birc.firstmvc.bean.DietRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.bean.FoodBean;
 import tw.edu.ntub.imd.birc.firstmvc.service.FoodService;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.BindingResultUtils;
@@ -11,6 +12,7 @@ import tw.edu.ntub.imd.birc.firstmvc.util.http.ResponseEntityBuilder;
 import tw.edu.ntub.imd.birc.firstmvc.util.json.object.ObjectData;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -40,15 +42,15 @@ public class FoodController {
 
     @PatchMapping(path="")
     public ResponseEntity<String> updateFood(@RequestBody FoodBean foodBean){
-        foodService.update(foodBean.getName(), foodBean);
+        foodService.update(foodBean.getId(), foodBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
                 .build();
     }
 
     @DeleteMapping(path="")
-    public ResponseEntity<String> deleteFood(@RequestParam(name = "name") String name) {
-        foodService.delete(name);
+    public ResponseEntity<String> deleteFood(@RequestParam(name = "id") Integer id) {
+        foodService.delete(id);
         return ResponseEntityBuilder.success()
                 .message("刪除成功")
                 .build();
@@ -56,16 +58,12 @@ public class FoodController {
 
     @GetMapping(path = "", params = {"name"})
     public ResponseEntity<String> getFood(@RequestParam(name = "name") String name) {
-        ObjectData objectData = new ObjectData();
-        Optional<FoodBean> foodBeanOptional = foodService.getById(name);
-        foodBeanOptional.orElseThrow(() -> new RuntimeException("查無此飲食，請確認名字是否正確"));
-        FoodBean foodBean = foodBeanOptional.get();
-        addFoodToObjectData(objectData,foodBean);
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(objectData)
+                .data(foodService.getByName(name), this::addFoodToObjectData)
                 .build();
     }
+
 
     private void addFoodToObjectData(ObjectData objectData, FoodBean foodBean) {
         objectData.add("name", foodBean.getName());

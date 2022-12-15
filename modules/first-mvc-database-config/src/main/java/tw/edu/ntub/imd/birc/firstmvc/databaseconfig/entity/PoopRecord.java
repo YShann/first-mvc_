@@ -2,6 +2,7 @@ package tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity;
 
 import lombok.Data;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.Config;
+import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.license.PoopRecordLicense;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.license.WaterRecordLicense;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@EntityListeners(WaterRecordLicense.class)
+@EntityListeners(PoopRecordLicense.class)
 @Table(name = "poop_record", schema = Config.DATABASE_NAME)
 public class PoopRecord {
     /**
@@ -38,4 +39,19 @@ public class PoopRecord {
     @Column(name = "poop_time", nullable = false)
     public LocalDate poopTime;
 
+    /**
+     * 糞便情況
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "poop_status", length = 45, nullable = false)
+    public String poopStatus;
+
+    /**
+     * 帳號
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "account", length = 45, nullable = false)
+    public String account;
 }

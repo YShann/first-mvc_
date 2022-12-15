@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tw.edu.ntub.imd.birc.firstmvc.bean.UserBean;
+import tw.edu.ntub.imd.birc.firstmvc.bean.WaterRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.service.UserService;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.BindingResultUtils;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.ResponseEntityBuilder;
@@ -28,9 +29,28 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping(path = "")
+    @GetMapping(path = "/login")
+    public ResponseEntity<String> login(@RequestParam(name = "account") String account, @RequestParam(name = "password") String password) {
+        System.out.println(userService.login(account,password));
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(userService.login(account,password), this::addUserToObjectData)
+                .build();
+    }
+
+    @GetMapping(path = "", params = {"account"})
+    public ResponseEntity<String> getUser(@RequestParam(name = "account") String account) {
+        System.out.println(userService.getByAccount(account));
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(userService.getByAccount(account), this::addUserToObjectData)
+                .build();
+    }
+
+
+    @PostMapping(path = "/register")
     public ResponseEntity<String> createUser(@Valid @RequestBody UserBean userBean,
-                                               BindingResult bindingResult) {
+                                             BindingResult bindingResult) {
         BindingResultUtils.validate(bindingResult);
         userService.save(userBean);
         return ResponseEntityBuilder.success()
@@ -39,8 +59,8 @@ public class UserController {
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<String> createUser(@RequestBody UserBean userBean) {
-        userService.update(userBean.getName(), userBean);
+    public ResponseEntity<String> editUser(@RequestBody UserBean userBean) {
+        userService.update(userBean.getAccount(), userBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
                 .build();
@@ -54,25 +74,17 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"name"})
-    public ResponseEntity<String> getUser(@RequestParam(name = "name") String name) {
-        ObjectData objectData = new ObjectData();
-        Optional<UserBean> userBeanOptional = userService.getById(name);
-        userBeanOptional.orElseThrow(() -> new RuntimeException("查無此資料，請確認使用者姓名是否正確"));
-        UserBean userBean = userBeanOptional.get();
-        addUserToObjectData(objectData,userBean);
-        return ResponseEntityBuilder.success()
-                .message("查詢成功")
-                .data(objectData)
-                .build();
-    }
 
     private void addUserToObjectData(ObjectData objectData, UserBean userBean) {
         objectData.add("name", userBean.getName());
-        objectData.add("gender", userBean.getGender().equals("0") ? "男" : "女");
+        objectData.add("gender", userBean.getGender());
         objectData.add("height", userBean.getHeight());
         objectData.add("weight", userBean.getWeight());
         objectData.add("bmi", userBean.getBmi());
+        objectData.add("birthday", userBean.getBirthday());
+        objectData.add("account", userBean.getAccount());
+        objectData.add("password", userBean.getPassword());
+        objectData.add("isEmailLogin", userBean.getIsEmailLogin());
     }
 
 }

@@ -13,8 +13,8 @@ public interface WaterRecordService extends BaseService<WaterRecordBean, Integer
 
     WaterRecordBean save(WaterRecordBean waterRecordBean);
 
-    List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate);
+    List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate,String account);
 
-//    List<DietRecordBean> searchByMealTime(LocalDateTime mealTime);
+    List<WaterRecordBean> searchByWaterTime(LocalDate waterTime,String account);
 
 }
