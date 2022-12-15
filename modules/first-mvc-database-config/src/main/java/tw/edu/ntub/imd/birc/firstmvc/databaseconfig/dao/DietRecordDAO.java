@@ -13,9 +13,9 @@ import java.util.List;
 public interface DietRecordDAO extends BaseDAO<DietRecord, Integer> {
     //    between :startDate and :endDate
 //    @Query("FROM DietRecord d where d.mealTime >= :startDate AND d.mealTime <= :endDate order by d.mealTime DESC ")
-    @Query("FROM DietRecord d where d.mealDate between :startDate and :endDate order by d.mealDate DESC ")
-    List<DietRecord> searchByMealTimeRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("FROM DietRecord d where d.account =:account AND d.mealDate between :startDate and :endDate order by d.mealDate DESC ")
+    List<DietRecord> searchByMealTimeRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("account") String account);
 
-    @Query("FROM DietRecord d where d.mealDate = :mealDate order by d.mealDate DESC ")
-    List<DietRecord> searchByMealDate(@Param("mealDate") LocalDate mealDate, Sort sort);
+    @Query("FROM DietRecord d where d.mealDate = :mealDate and d.account=:account order by d.mealDate DESC ")
+    List<DietRecord> searchByMealDate(@Param("mealDate") LocalDate mealDate, @Param("account") String account, Sort sort);
 }

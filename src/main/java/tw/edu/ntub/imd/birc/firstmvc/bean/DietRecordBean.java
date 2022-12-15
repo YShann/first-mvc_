@@ -29,4 +29,5 @@ public class DietRecordBean {
     private String imageUrl;
     private MultipartFile imageFile;
     public String foodContent;
+    public String account;
 }

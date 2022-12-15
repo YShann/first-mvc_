@@ -68,22 +68,24 @@ public class PoopRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate","account"})
     public ResponseEntity<String> getPoopRecordRange(
             @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate) {
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(poopRecordService.searchByPoopTimeRange(startDate,endDate), this::addPoopRecordToObjectData)
+                .data(poopRecordService.searchByPoopTimeRange(startDate,endDate,account), this::addPoopRecordToObjectData)
                 .build();
     }
 
-    @GetMapping(path = "/poopTime", params = {"poopTime"})
+    @GetMapping(path = "/poopTime", params = {"poopTime","account"})
     public ResponseEntity<String> getPoopRecord(
-            @RequestParam(name = "poopTime") LocalDate poopTime) {
+            @RequestParam(name = "poopTime") LocalDate poopTime,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(poopRecordService.searchByPoopTime(poopTime), this::addPoopRecordToObjectData)
+                .data(poopRecordService.searchByPoopTime(poopTime,account), this::addPoopRecordToObjectData)
                 .build();
     }
 
@@ -92,6 +94,7 @@ public class PoopRecordController {
         objectData.add("poopCount", poopRecordBean.getPoopCount());
         objectData.add("poopTime", poopRecordBean.getPoopTime());
         objectData.add("poopStatus", poopRecordBean.getPoopStatus());
+        objectData.add("account", poopRecordBean.getAccount());
     }
 
 }

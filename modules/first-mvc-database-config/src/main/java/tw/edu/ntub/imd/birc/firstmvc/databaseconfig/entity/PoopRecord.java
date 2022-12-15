@@ -47,4 +47,11 @@ public class PoopRecord {
     @Column(name = "poop_status", length = 45, nullable = false)
     public String poopStatus;
 
+    /**
+     * 帳號
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "account", length = 45, nullable = false)
+    public String account;
 }

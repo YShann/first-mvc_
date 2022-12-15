@@ -11,15 +11,17 @@ public class UserLicense {
 
     @PrePersist
     public void preSave(User user) {
-        if (user.getBmi() == null) {
-            user.setBmi((double) (user.getWeight() / (user.getHeight() * user.getHeight())));
+        if (user.getHeight() != null && user.getWeight() != null && user.getBmi() == null) {
+            Double height = user.getHeight() / 100;
+            user.setBmi((double) (user.getWeight() / (height * height)));
         }
     }
 
     @PreUpdate
     public void preUpdate(User user) {
-        if (user.getBmi() == null) {
-            user.setBmi((double) (user.getWeight() / (user.getHeight() * user.getHeight())));
+        if (user.getHeight() != null && user.getWeight() != null && user.getBmi() == null) {
+            Double height = user.getHeight() / 100;
+            user.setBmi((double) (user.getWeight() / (height * height)));
         }
     }
 }

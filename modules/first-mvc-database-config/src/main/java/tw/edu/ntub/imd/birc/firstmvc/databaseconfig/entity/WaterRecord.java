@@ -39,5 +39,11 @@ public class WaterRecord {
     @Column(name = "water_time", nullable = false)
     public LocalDate waterTime;
 
-
+    /**
+     * 帳號
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "account", length = 45, nullable = false)
+    public String account;
 }

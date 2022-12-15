@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public interface PoopRecordDAO extends BaseDAO<PoopRecord, Integer> {
 //    between :startDate and :endDate
-    @Query("FROM PoopRecord p where p.poopTime >= :startDate AND p.poopTime <= :endDate order by p.poopTime DESC ")
-    List<PoopRecord> searchByPoopTimeRange(@Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
+    @Query("FROM PoopRecord p where p.account =:account AND p.poopTime >= :startDate AND p.poopTime <= :endDate order by p.poopTime DESC ")
+    List<PoopRecord> searchByPoopTimeRange(@Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate, @Param("account")String account);
 
-    @Query("FROM PoopRecord d where d.poopTime = :poopTime order by d.poopTime DESC ")
-    List<PoopRecord> searchByPoopTime(@Param("poopTime") LocalDate poopTime);
+    @Query("FROM PoopRecord d where d.poopTime = :poopTime AND d.account=:account order by d.poopTime DESC ")
+    List<PoopRecord> searchByPoopTime(@Param("poopTime") LocalDate poopTime, @Param("account")String account);
 }

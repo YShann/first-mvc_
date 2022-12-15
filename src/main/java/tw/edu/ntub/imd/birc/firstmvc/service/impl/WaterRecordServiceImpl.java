@@ -35,14 +35,14 @@ public class WaterRecordServiceImpl extends BaseServiceImpl<WaterRecordBean, Wat
     }
 
     @Override
-    public List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate) {
-        return CollectionUtils.map(waterRecordDAO.searchByWaterTimeRange(startDate, endDate), transformer::transferToBean);
+    public List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate,String account) {
+        return CollectionUtils.map(waterRecordDAO.searchByWaterTimeRange(startDate, endDate, account), transformer::transferToBean);
 
     }
 
     @Override
-    public List<WaterRecordBean> searchByWaterTime(LocalDate waterTime) {
-        return CollectionUtils.map(waterRecordDAO.searchByWaterTime(waterTime), transformer::transferToBean);
+    public List<WaterRecordBean> searchByWaterTime(LocalDate waterTime,String account) {
+        return CollectionUtils.map(waterRecordDAO.searchByWaterTime(waterTime, account), transformer::transferToBean);
     }
 
     @Override

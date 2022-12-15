@@ -73,22 +73,26 @@ public class DietRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate", "account"})
     public ResponseEntity<String> getDietRecordRange(
             @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate) {
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account
+            ) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(dietRecordService.searchByMealDateRange(startDate,endDate), this::addDietRecordToObjectData)
+                .data(dietRecordService.searchByMealDateRange(startDate,endDate,account), this::addDietRecordToObjectData)
                 .build();
     }
 
-    @GetMapping(path = "/mealDate", params = {"mealDate"})
+    @GetMapping(path = "/mealDate", params = {"mealDate","account"})
     public ResponseEntity<String> getDietRecord(
-            @RequestParam(name = "mealDate") LocalDate mealDate) {
+            @RequestParam(name = "mealDate") LocalDate mealDate,
+            @RequestParam(name = "account") String account
+    ) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(dietRecordService.searchByMealDate(mealDate), this::addDietRecordToObjectData)
+                .data(dietRecordService.searchByMealDate(mealDate,account), this::addDietRecordToObjectData)
                 .build();
     }
 
@@ -112,6 +116,7 @@ public class DietRecordController {
         objectData.add("fats", dietRecordBean.getFats());
         objectData.add("imageUrl", dietRecordBean.getImageUrl());
         objectData.add("foodContent", dietRecordBean.getFoodContent());
+        objectData.add("account", dietRecordBean.getAccount());
     }
 
 }

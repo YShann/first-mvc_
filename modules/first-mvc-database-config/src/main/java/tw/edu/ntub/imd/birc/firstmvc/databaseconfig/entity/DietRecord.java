@@ -168,4 +168,12 @@ public class DietRecord {
 
     @Column(name = "food_content", length = 500)
     public String foodContent;
+
+    /**
+     * 帳號
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "account", length = 45, nullable = false)
+    public String account;
 }

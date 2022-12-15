@@ -10,8 +10,8 @@ public interface PoopRecordService extends BaseService<PoopRecordBean, Integer> 
 
     PoopRecordBean save(PoopRecordBean poopRecordBean);
 
-    List<PoopRecordBean> searchByPoopTimeRange(LocalDate startDate, LocalDate endDate);
+    List<PoopRecordBean> searchByPoopTimeRange(LocalDate startDate, LocalDate endDate,String account);
 
-    List<PoopRecordBean> searchByPoopTime(LocalDate poopTime);
+    List<PoopRecordBean> searchByPoopTime(LocalDate poopTime,String account);
 
 }

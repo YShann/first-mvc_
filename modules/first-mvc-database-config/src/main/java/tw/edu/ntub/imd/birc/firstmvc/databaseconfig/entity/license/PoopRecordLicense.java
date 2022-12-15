@@ -11,13 +11,10 @@ public class PoopRecordLicense {
 
     @PrePersist
     public void preSave(PoopRecord poopRecord) {
-        if (poopRecord.getPoopTime() == null) {
-            poopRecord.setPoopTime(LocalDate.now());
-        }
+
     }
 
     @PreUpdate
     public void preUpdate(PoopRecord poopRecord) {
-        poopRecord.setPoopTime(LocalDate.now());
     }
 }

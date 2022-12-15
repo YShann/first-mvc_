@@ -54,13 +54,13 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
     }
 
     @Override
-    public List<DietRecordBean> searchByMealDateRange(LocalDate startDate, LocalDate endDate) {
-        return CollectionUtils.map(dietRecordDAO.searchByMealTimeRange(startDate, endDate), transformer::transferToBean);
+    public List<DietRecordBean> searchByMealDateRange(LocalDate startDate, LocalDate endDate,String account) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealTimeRange(startDate, endDate, account), transformer::transferToBean);
     }
 
     @Override
-    public List<DietRecordBean> searchByMealDate(LocalDate mealDate) {
-        return CollectionUtils.map(dietRecordDAO.searchByMealDate(mealDate, getSort()), transformer::transferToBean);
+    public List<DietRecordBean> searchByMealDate(LocalDate mealDate,String account) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealDate(mealDate, account, getSort()), transformer::transferToBean);
     }
 
     @Override

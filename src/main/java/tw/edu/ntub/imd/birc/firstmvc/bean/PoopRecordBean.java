@@ -10,4 +10,5 @@ public class PoopRecordBean {
     public Integer poopCount;
     public LocalDate poopTime;
     public String poopStatus;
+    public String account;
 }

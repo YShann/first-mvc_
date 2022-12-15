@@ -68,22 +68,24 @@ public class WaterRecordController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"startDate", "endDate"})
+    @GetMapping(path = "", params = {"startDate", "endDate","account"})
     public ResponseEntity<String> getWaterRecordRange(
             @RequestParam(name = "startDate") LocalDate startDate,
-            @RequestParam(name = "endDate") LocalDate endDate) {
+            @RequestParam(name = "endDate") LocalDate endDate,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(waterRecordService.searchByWaterTimeRange(startDate,endDate), this::addWaterRecordToObjectData)
+                .data(waterRecordService.searchByWaterTimeRange(startDate,endDate,account), this::addWaterRecordToObjectData)
                 .build();
     }
 
-    @GetMapping(path = "/waterTime", params = {"waterTime"})
+    @GetMapping(path = "/waterTime", params = {"waterTime","account"})
     public ResponseEntity<String> getWaterRecord(
-            @RequestParam(name = "waterTime") LocalDate waterTime) {
+            @RequestParam(name = "waterTime") LocalDate waterTime,
+            @RequestParam(name = "account") String account) {
         return ResponseEntityBuilder.success()
                 .message("查詢成功")
-                .data(waterRecordService.searchByWaterTime(waterTime), this::addWaterRecordToObjectData)
+                .data(waterRecordService.searchByWaterTime(waterTime,account), this::addWaterRecordToObjectData)
                 .build();
     }
 
@@ -91,6 +93,7 @@ public class WaterRecordController {
         objectData.add("id", waterRecordBean.getId());
         objectData.add("waterVolume", waterRecordBean.getWaterVolume());
         objectData.add("waterTime", waterRecordBean.getWaterTime());
+        objectData.add("account", waterRecordBean.getAccount());
     }
 
 }

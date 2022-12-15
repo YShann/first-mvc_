@@ -12,13 +12,10 @@ public class WaterRecordLicense {
 
     @PrePersist
     public void preSave(WaterRecord waterRecord) {
-        if (waterRecord.getWaterTime() == null) {
-            waterRecord.setWaterTime(LocalDate.now());
-        }
+
     }
 
     @PreUpdate
     public void preUpdate(WaterRecord waterRecord) {
-        waterRecord.setWaterTime(LocalDate.now());
     }
 }
