@@ -1,6 +1,6 @@
 server:
-  ip: 211.75.1.204
-  delegate-port: 50000
+  ip: localhost
+  delegate-port: 8080
   image:
     name: image
     path: 'D:\first-mvc\UploadFile\${server.image.name}\'

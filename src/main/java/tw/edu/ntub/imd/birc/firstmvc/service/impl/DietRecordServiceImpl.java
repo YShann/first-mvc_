@@ -49,18 +49,18 @@ public class DietRecordServiceImpl extends BaseServiceImpl<DietRecordBean, DietR
 
     private Sort getSort() {
         return Sort.by(
-                Sort.Order.desc(DietRecord_.MEAL_TIME)
+                Sort.Order.desc(DietRecord_.MEAL_DATE)
         );
     }
 
     @Override
-    public List<DietRecordBean> searchByMealTimeRange(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<DietRecordBean> searchByMealDateRange(LocalDate startDate, LocalDate endDate) {
         return CollectionUtils.map(dietRecordDAO.searchByMealTimeRange(startDate, endDate), transformer::transferToBean);
     }
 
     @Override
-    public List<DietRecordBean> searchByMealTime(LocalDateTime mealTime) {
-        return CollectionUtils.map(dietRecordDAO.searchByMealTime(mealTime, getSort()), transformer::transferToBean);
+    public List<DietRecordBean> searchByMealDate(LocalDate mealDate) {
+        return CollectionUtils.map(dietRecordDAO.searchByMealDate(mealDate, getSort()), transformer::transferToBean);
     }
 
     @Override

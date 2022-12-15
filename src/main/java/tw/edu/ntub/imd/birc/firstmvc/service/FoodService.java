@@ -2,5 +2,11 @@ package tw.edu.ntub.imd.birc.firstmvc.service;
 
 import tw.edu.ntub.imd.birc.firstmvc.bean.FoodBean;
 
-public interface FoodService extends BaseService<FoodBean, String> {
+import java.time.LocalDate;
+import java.util.List;
+
+public interface FoodService extends BaseService<FoodBean, Integer> {
+
+    List<FoodBean> getByName(String name);
+
 }

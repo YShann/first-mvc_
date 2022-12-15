@@ -11,8 +11,8 @@ public interface DietRecordService extends BaseService<DietRecordBean, Integer> 
 
     DietRecordBean save(DietRecordBean dietRecordBean, MultipartFile imageFile);
 
-    List<DietRecordBean> searchByMealTimeRange(LocalDateTime startDate, LocalDateTime endDate);
+    List<DietRecordBean> searchByMealDateRange(LocalDate startDate, LocalDate endDate);
 
-    List<DietRecordBean> searchByMealTime(LocalDateTime mealTime);
+    List<DietRecordBean> searchByMealDate(LocalDate mealDate);
 
 }

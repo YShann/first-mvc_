@@ -5,7 +5,9 @@ import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.Config;
 import tw.edu.ntub.imd.birc.firstmvc.databaseconfig.entity.license.DietRecordLicense;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -35,8 +37,16 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "portion_size", nullable = false)
+    @Column(name = "portion_size")
     public Integer portionSize;
+
+    /**
+     * 進食日期
+     *
+     * @Since 1.0.1
+     */
+    @Column(name = "meal_date", nullable = false)
+    public LocalDate mealDate;
 
     /**
      * 進食時間
@@ -44,7 +54,7 @@ public class DietRecord {
      * @Since 1.0.1
      */
     @Column(name = "meal_time", nullable = false)
-    public LocalDateTime mealTime;
+    public LocalTime mealTime;
 
     /**
      * 備註
@@ -59,7 +69,7 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "energy", nullable = false)
+    @Column(name = "energy")
     public Integer energy;
 
     /**
@@ -67,7 +77,7 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "fat",precision=11, scale=3, nullable = false)
+    @Column(name = "fat",precision=11, scale=3)
     public Double fat;
 
     /**
@@ -75,7 +85,7 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "saturated_fat",precision=11, scale=3, nullable = false)
+    @Column(name = "saturated_fat",precision=11, scale=3)
     public Double saturatedFat;
 
     /**
@@ -83,7 +93,7 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "carbohydrate",precision=11, scale=3, nullable = false)
+    @Column(name = "carbohydrate",precision=11, scale=3)
     public Double carbohydrate;
 
     /**
@@ -91,7 +101,7 @@ public class DietRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "protein",precision=11, scale=3, nullable = false)
+    @Column(name = "protein",precision=11, scale=3)
     public Double protein;
 
     /**
@@ -149,4 +159,13 @@ public class DietRecord {
      */
     @Column(name = "image", length = 500, nullable = false)
     public String imageUrl;
+
+    /**
+     * 餐飲內容物
+     *
+     * @Since 1.0.1
+     */
+
+    @Column(name = "food_content", length = 500)
+    public String foodContent;
 }

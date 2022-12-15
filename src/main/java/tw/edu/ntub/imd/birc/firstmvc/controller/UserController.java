@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tw.edu.ntub.imd.birc.firstmvc.bean.UserBean;
+import tw.edu.ntub.imd.birc.firstmvc.bean.WaterRecordBean;
 import tw.edu.ntub.imd.birc.firstmvc.service.UserService;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.BindingResultUtils;
 import tw.edu.ntub.imd.birc.firstmvc.util.http.ResponseEntityBuilder;
@@ -28,9 +29,25 @@ public class UserController {
                 .build();
     }
 
+    @GetMapping(path = "/login")
+    public ResponseEntity<String> getUser(@RequestParam(name = "account") String account, @RequestParam(name = "password") String password) {
+        ObjectData objectData = new ObjectData();
+        Optional<UserBean> userBeanOptional = userService.getById(account);
+        userBeanOptional.orElseThrow(() -> new RuntimeException("查無此帳號，請確認帳號是否正確"));
+        UserBean userBean = userBeanOptional.get();
+        if(userBean.password.equals(password)){
+            addUserToObjectData(objectData, userBean);
+        }
+        return ResponseEntityBuilder.success()
+                .message("查詢成功")
+                .data(objectData)
+                .build();
+    }
+
+
     @PostMapping(path = "")
     public ResponseEntity<String> createUser(@Valid @RequestBody UserBean userBean,
-                                               BindingResult bindingResult) {
+                                             BindingResult bindingResult) {
         BindingResultUtils.validate(bindingResult);
         userService.save(userBean);
         return ResponseEntityBuilder.success()
@@ -39,7 +56,7 @@ public class UserController {
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<String> createUser(@RequestBody UserBean userBean) {
+    public ResponseEntity<String> editUser(@RequestBody UserBean userBean) {
         userService.update(userBean.getName(), userBean);
         return ResponseEntityBuilder.success()
                 .message("更新成功")
@@ -54,18 +71,6 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping(path = "", params = {"name"})
-    public ResponseEntity<String> getUser(@RequestParam(name = "name") String name) {
-        ObjectData objectData = new ObjectData();
-        Optional<UserBean> userBeanOptional = userService.getById(name);
-        userBeanOptional.orElseThrow(() -> new RuntimeException("查無此資料，請確認使用者姓名是否正確"));
-        UserBean userBean = userBeanOptional.get();
-        addUserToObjectData(objectData,userBean);
-        return ResponseEntityBuilder.success()
-                .message("查詢成功")
-                .data(objectData)
-                .build();
-    }
 
     private void addUserToObjectData(ObjectData objectData, UserBean userBean) {
         objectData.add("name", userBean.getName());

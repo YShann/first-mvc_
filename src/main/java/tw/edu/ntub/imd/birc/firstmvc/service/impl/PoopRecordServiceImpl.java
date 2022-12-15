@@ -44,6 +44,11 @@ public class PoopRecordServiceImpl extends BaseServiceImpl<PoopRecordBean, PoopR
     }
 
     @Override
+    public List<PoopRecordBean> searchByPoopTime(LocalDate poopTime) {
+        return CollectionUtils.map(poopRecordDAO.searchByPoopTime(poopTime), transformer::transferToBean);
+    }
+
+    @Override
     public List<PoopRecordBean> searchAll() {
         return CollectionUtils.map(poopRecordDAO.findAll(getSort()), transformer::transferToBean);
     }
@@ -54,8 +59,5 @@ public class PoopRecordServiceImpl extends BaseServiceImpl<PoopRecordBean, PoopR
         );
     }
 
-//    @Override
-//    public DietRecordBean save(WaterRecordBean waterRecordBean) {
-//        return null;
-//    }
+
 }

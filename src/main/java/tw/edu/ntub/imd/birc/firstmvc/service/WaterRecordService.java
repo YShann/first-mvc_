@@ -15,6 +15,6 @@ public interface WaterRecordService extends BaseService<WaterRecordBean, Integer
 
     List<WaterRecordBean> searchByWaterTimeRange(LocalDate startDate, LocalDate endDate);
 
-//    List<DietRecordBean> searchByMealTime(LocalDateTime mealTime);
+    List<WaterRecordBean> searchByWaterTime(LocalDate waterTime);
 
 }

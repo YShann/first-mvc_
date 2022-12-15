@@ -12,6 +12,6 @@ public interface PoopRecordService extends BaseService<PoopRecordBean, Integer> 
 
     List<PoopRecordBean> searchByPoopTimeRange(LocalDate startDate, LocalDate endDate);
 
-//    List<DietRecordBean> searchByMealTime(LocalDateTime mealTime);
+    List<PoopRecordBean> searchByPoopTime(LocalDate poopTime);
 
 }
